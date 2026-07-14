@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pair EQ — input→output graphic equalizer</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="toolbar">
+  <h1>Pair&nbsp;EQ</h1>
+  <button id="btnStart" class="btn primary">Start</button>
+  <button id="btnStop" class="btn" disabled>Stop</button>
+  <label class="inline">Phase
+    <select id="phaseMode">
+      <option value="minimum" selected>Zero-latency minimum phase</option>
+      <option value="linear">Linear phase (FIR)</option>
+    </select>
+  </label>
+  <span class="spacer"></span>
+  <button id="btnNewPair" class="btn" title="Open another input/output pair in a new tab">+ New pair (tab)</button>
+  <button id="btnSettings" class="btn">⚙ Settings</button>
+</header>
+
+<div id="settingsPanel" class="settings-panel">
+  <h2>Settings</h2>
+
+  <label>Graph refresh rate
+    <select id="refreshRate">
+      <option value="0.1">0.1 s</option>
+      <option value="0.25">0.25 s</option>
+      <option value="0.5">0.5 s</option>
+      <option value="1" selected>1 s (default)</option>
+      <option value="2">2 s</option>
+    </select>
+  </label>
+
+  <label>Analysis window (FFT size)
+    <select id="fftSize">
+      <option value="1024">1024 samples</option>
+      <option value="2048">2048 samples</option>
+      <option value="4096">4096 samples</option>
+      <option value="8192" selected>8192 samples</option>
+      <option value="16384">16384 samples</option>
+    </select>
+  </label>
+  <div class="row">
+    <button id="btnAnalysisStart" class="btn small">Start analysis</button>
+    <button id="btnAnalysisStop" class="btn small">Stop analysis</button>
+  </div>
+
+  <label>Filter bank bands
+    <select id="numBands">
+      <option value="5">5</option>
+      <option value="8">8</option>
+      <option value="10" selected>10</option>
+      <option value="15">15</option>
+      <option value="20">20</option>
+      <option value="31">31</option>
+    </select>
+  </label>
+  <label>Band progression
+    <select id="progression">
+      <option value="log" selected>Logarithmic (octave-like)</option>
+      <option value="linear">Linear (equal Hz steps)</option>
+    </select>
+  </label>
+
+  <label>Input device
+    <select id="inputDevice"></select>
+  </label>
+  <label>Output device
+    <select id="outputDevice"></select>
+  </label>
+  <div class="row">
+    <button id="btnRefreshDevices" class="btn small">Refresh device list</button>
+  </div>
+
+  <label>Sample rate
+    <select id="sampleRate">
+      <option value="44100">44.1 kHz</option>
+      <option value="48000" selected>48 kHz</option>
+      <option value="96000">96 kHz</option>
+    </select>
+  </label>
+  <label>Sample precision
+    <select id="precision">
+      <option value="16">16-bit PCM</option>
+      <option value="24" selected>24-bit PCM</option>
+      <option value="32f">32-bit float</option>
+    </select>
+  </label>
+
+  <label>Linear-phase FIR length
+    <select id="firTaps">
+      <option value="1024">1024 taps</option>
+      <option value="2048">2048 taps</option>
+      <option value="4096" selected>4096 taps</option>
+      <option value="8192">8192 taps</option>
+    </select>
+  </label>
+  <p class="hint">Device, sample rate, precision and FIR length apply on the next Start.</p>
+</div>
+
+<main>
+  <div class="graph-wrap">
+    <canvas id="graph"></canvas>
+  </div>
+  <div id="bands" class="bands"></div>
+</main>
+
+<footer>
+  <div id="status" class="status">Loading…</div>
+</footer>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
